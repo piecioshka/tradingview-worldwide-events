@@ -3,6 +3,7 @@
 | Date       | Description                                                         | Priority | Link                                                                                                                       |
 | ---------- | ------------------------------------------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------- |
 | 2026-02-28 | USA & Izrael atakują Iran                                           | high     | -                                                                                                                          |
+| 2026-01-30 | Nominacja Warsha na szefa Fed + podwyżka depozytów CME na srebro (Silver -30%) | high     | -                                                                                                                          |
 | 2026-01-22 | Prezydent USA na Forum Ekonomicznym w Davos                         | low      | -                                                                                                                          |
 | 2026-01-17 | USA ogłosił zakup Grenlandii                                        | low      | -                                                                                                                          |
 | 2026-01-03 | Usunięcie Nicolása Maduro z władzy w Wenezueli                      | medium   | -                                                                                                                          |
