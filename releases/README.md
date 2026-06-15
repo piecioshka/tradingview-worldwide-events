@@ -13,7 +13,7 @@ changed in that release. These notes are meant to be pasted into TradingView's
 > the script page look cluttered.
 >
 > The indicator **description** (the evergreen "what it is" text) lives in
-> [../DESCRIPTION.md](../DESCRIPTION.md), not here.
+> [../docs/DESCRIPTION.md](../docs/DESCRIPTION.md), not here.
 
 | Version             | Date       | Events | Summary                                                             |
 | ------------------- | ---------- | -----: | ------------------------------------------------------------------- |
