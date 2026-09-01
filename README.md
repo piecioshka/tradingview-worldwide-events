@@ -1,5 +1,11 @@
 # 🌍 Worldwide Events — TradingView Indicator
 
+<!-- prettier-ignore-start -->
+
+[![generate-events](https://github.com/piecioshka/tradingview-worldwide-events/actions/workflows/generate-events.yml/badge.svg)](https://github.com/piecioshka/tradingview-worldwide-events/actions/workflows/generate-events.yml)
+
+<!-- prettier-ignore-end -->
+
 From the Chaco War to today's headlines — overlay 90+ key historical events directly on your price chart and see how markets reacted.
 
 **[View on TradingView →](https://www.tradingview.com/script/lX6YZhUm-Worldwide-Events/)**
