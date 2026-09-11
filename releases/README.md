@@ -15,11 +15,12 @@ changed in that release. These notes are meant to be pasted into TradingView's
 > The indicator **description** (the evergreen "what it is" text) lives in
 > [../docs/DESCRIPTION.md](../docs/DESCRIPTION.md), not here.
 
-| Version             | Date       | Events | Summary                                                             |
-| ------------------- | ---------- | -----: | ------------------------------------------------------------------- |
-| [v1.0.2](v1.0.2.md) | 2026-06-03 |    108 | +13 events: AI boom, banking & macro shocks, 2026 Iran war timeline |
-| [v1.0.1](v1.0.1.md) | 2026-03-04 |     95 | +22 events: deep historical conflicts back to the Chaco War (1932)  |
-| [v1.0.0](v1.0.0.md) | 2026-03-02 |     73 | Initial public release                                              |
+| Version             | Date       | Events | Summary                                                                 |
+| ------------------- | ---------- | -----: | ----------------------------------------------------------------------- |
+| [v1.0.3](v1.0.3.md) | 2026-09-11 |    176 | +68 events: all G7/G8 summits (1975-2026), oil-market history, Iran war |
+| [v1.0.2](v1.0.2.md) | 2026-06-03 |    108 | +13 events: AI boom, banking & macro shocks, 2026 Iran war timeline     |
+| [v1.0.1](v1.0.1.md) | 2026-03-04 |     95 | +22 events: deep historical conflicts back to the Chaco War (1932)      |
+| [v1.0.0](v1.0.0.md) | 2026-03-02 |     73 | Initial public release                                                  |
 
 ## Versioning
 
