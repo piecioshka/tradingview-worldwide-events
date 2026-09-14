@@ -6,18 +6,26 @@ on:
     paths:
       - "data/events-*.md"
 
+concurrency:
+  group: generate-events
+  cancel-in-progress: false
+
 jobs:
   generate:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       contents: write
 
     steps:
       - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.x"
+
+      - name: Validate event data
+        run: python scripts/check-events.py --no-http
 
       - name: Generate worldwide-events.pine
         run: python scripts/generate-events.py

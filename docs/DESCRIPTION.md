@@ -7,7 +7,7 @@ below into the **Description** field when publishing.
 > ⚠️ **Keep the description evergreen — no version numbers, no changelog.**
 > On a public script the title and description are locked 15 minutes after the
 > first publish and can never be edited again — not even when you publish a new
-> version (that flow only *appends* dated release notes below the description, it
+> version (that flow only _appends_ dated release notes below the description, it
 > does not replace it). A changelog baked into the description freezes forever at
 > whatever version was live at first publish.
 >
@@ -36,7 +36,6 @@ From the Chaco War to today's headlines — overlay 90+ key historical events di
 [*]💥 Financial crises — FTX, SVB, COVID crash, 2008 crisis
 [*]🌐 Geopolitics — wars, attacks, sanctions, oil embargoes
 [*]🏦 Monetary policy — every pivotal Fed and ECB decision on the timeline
-[*]🔗 Source links — each event links to its Wikipedia article
 [*]🔄 Continuously updated — Liberation Day 2025, US-China tariffs, Iran
 [*]⚡ Zero configuration — works immediately after adding to the chart
 [*]🆓 Open source — full code available and modifiable

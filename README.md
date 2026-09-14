@@ -23,7 +23,6 @@ From the Chaco War to today's headlines — overlay 90+ key historical events di
 - 💥 Financial crises — FTX, SVB, COVID crash, 2008 crisis
 - 🌐 Geopolitics — wars, attacks, sanctions, oil embargoes
 - 🏦 Monetary policy — every pivotal Fed and ECB decision on the timeline
-- 🔗 Source links — each event links to its Wikipedia article
 - 🔄 Continuously updated — Liberation Day 2025, US-China tariffs, Iran
 - ⚡ Zero configuration — works immediately after adding to the chart
 - 🆓 Open source — full code available and modifiable
@@ -60,6 +59,23 @@ python scripts/generate-events.py
 ```
 
 To add a new language, create `data/events-XX.md` (where `XX` is the ISO language code) using the same table format as the existing files. The generator and GitHub Actions workflow will pick it up automatically.
+
+### Event data format
+
+Each row is `| Date | Description | Priority | Link |`:
+
+- **Date** — `YYYY-MM-DD`, rows sorted descending. Every language file must cover exactly the same set of dates.
+- **Description** — plain text, no double quotes (they would break the generated Pine string).
+- **Priority** — `high`, `medium` or `low`; drives the marker color.
+- **Link** — a source for the event, or `-` when none is recorded. Links are documentation for contributors only — they are **not** rendered by the indicator and never reach `worldwide-events.pine`.
+
+Before committing changes to `data/`, run the validator:
+
+```bash
+python scripts/check-events.py --no-http
+```
+
+It checks that all language files share the same dates, that rows are sorted and unique, and that descriptions are Pine-safe. Drop `--no-http` to also verify that every link returns HTTP 200 (slow — it fetches each URL).
 
 ## Contributing
 

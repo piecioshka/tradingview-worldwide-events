@@ -4,8 +4,8 @@
 Usage: check-events.py [--since YYYY-MM-DD] [--data-dir data] [--no-http]
 
 Checks: same date set in every language file, descending order, no double quotes in
-descriptions, description length, a real link on every row newer than --since, and
-HTTP status of those links. Exit code 1 when any check fails.
+descriptions, description length, well-formed links (a bare `-` means no source on
+record), a real link on every row newer than --since, and HTTP status of those links. Exit code 1 when any check fails.
 """
 
 import argparse
@@ -72,15 +72,17 @@ def main():
                 problems.append(f"{path}:{n}: double quote in description (breaks Pine string)")
             if len(desc) > MAX_DESC:
                 problems.append(f"{path}:{n}: description {len(desc)} chars (> {MAX_DESC})")
-            is_new = args.since is None or date > args.since
-            if is_new:
+            link = link.strip()
+            if link not in ("", "-"):
                 m = LINK.search(link)
                 if not m:
-                    problems.append(f"{path}:{n}: {date} has no link")
-                elif not args.no_http:
+                    problems.append(f"{path}:{n}: {date} link column is not a markdown link: {link[:60]}")
+                elif not args.no_http and (args.since is None or date > args.since):
                     status = http_status(m.group(1))
                     if status != 200:
                         problems.append(f"{path}:{n}: {date} link -> {status}: {m.group(1)}")
+            if link in ("", "-") and args.since is not None and date > args.since:
+                problems.append(f"{path}:{n}: {date} has no link (required for rows after --since)")
         if dates != sorted(dates, reverse=True):
             problems.append(f"{path}: rows are not sorted descending by date")
         if len(dates) != len(set(dates)):
