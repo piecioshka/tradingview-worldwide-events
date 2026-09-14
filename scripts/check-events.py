@@ -16,7 +16,8 @@ import sys
 import urllib.request
 
 ROW = re.compile(r"^\| (\d{4}-\d{2}-\d{2}) +\| (.*?) +\| (high|medium|low) +\| (.*?) +\|$")
-LINK = re.compile(r"\[[^\]]+\]\(<?(https?://[^)>]+)>?\)")
+# Two forms: [text](<url>) keeps parentheses inside the URL, [text](url) does not.
+LINK = re.compile(r"\[[^\]]+\]\((?:<(https?://[^>]+)>|(https?://[^)\s]+))\)")
 MAX_DESC = 90
 
 
@@ -78,9 +79,9 @@ def main():
                 if not m:
                     problems.append(f"{path}:{n}: {date} link column is not a markdown link: {link[:60]}")
                 elif not args.no_http and (args.since is None or date > args.since):
-                    status = http_status(m.group(1))
+                    status = http_status(m.group(1) or m.group(2))
                     if status != 200:
-                        problems.append(f"{path}:{n}: {date} link -> {status}: {m.group(1)}")
+                        problems.append(f"{path}:{n}: {date} link -> {status}: {m.group(1) or m.group(2)}")
             if link in ("", "-") and args.since is not None and date > args.since:
                 problems.append(f"{path}:{n}: {date} has no link (required for rows after --since)")
         if dates != sorted(dates, reverse=True):
