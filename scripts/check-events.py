@@ -16,7 +16,10 @@ import sys
 import urllib.error
 import urllib.request
 
-ROW = re.compile(r"^\| (\d{4}-\d{2}-\d{2}) +\| (.*?) +\| (high|medium|low) +\| (.*?) +\|$")
+# Date, optionally followed by a time of day for events whose hour is known.
+ROW = re.compile(
+    r"^\| (\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2}(?::\d{2})?)?) +\| (.*?) +\| (high|medium|low) +\| (.*?) +\|$"
+)
 # Two forms: [text](<url>) keeps parentheses inside the URL, [text](url) does not.
 LINK = re.compile(r"\[[^\]]+\]\((?:<(https?://[^>]+)>|(https?://[^)\s]+))\)")
 MAX_DESC = 90

@@ -64,7 +64,7 @@ To add a new language, create `data/events-XX.md` (where `XX` is the ISO languag
 
 Each row is `| Date | Description | Priority | Link |`:
 
-- **Date** — `YYYY-MM-DD`, rows sorted descending. Every language file must cover exactly the same set of dates.
+- **Date** — `YYYY-MM-DD`, or `YYYY-MM-DD HH:MM[:SS]` when the time of day is known. Rows are sorted descending and every language file must cover exactly the same set of dates. Times are **UTC**: the generator emits `timestamp("…T00:00:00+00:00")`, so an event lands on the same instant regardless of the chart's exchange timezone.
 - **Description** — plain text, no double quotes (they would break the generated Pine string).
 - **Priority** — `high`, `medium` or `low`; drives the marker color.
 - **Link** — a source for the event, or `-` when none is recorded. Links are documentation for contributors only — they are **not** rendered by the indicator and never reach `worldwide-events.pine`.

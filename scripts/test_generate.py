@@ -130,6 +130,30 @@ class TestGeneratorRobustness(unittest.TestCase):
             self.assertEqual(once, box.pine())
 
 
+class TestTimestamps(unittest.TestCase):
+    def test_bare_date_becomes_midnight_utc(self):
+        self.assertEqual(gen.to_iso_utc("2026-09-08"), "2026-09-08T00:00:00+00:00")
+
+    def test_time_of_day_is_kept(self):
+        self.assertEqual(gen.to_iso_utc("2026-09-08 14:30"), "2026-09-08T14:30:00+00:00")
+        self.assertEqual(gen.to_iso_utc("2026-09-08 14:30:05"), "2026-09-08T14:30:05+00:00")
+
+    def test_invalid_time_is_an_error(self):
+        with self.assertRaises(SystemExit):
+            gen.to_iso_utc("2026-09-08 14")
+
+    def test_row_with_time_flows_through_the_generator(self):
+        with Sandbox() as box:
+            box.write(["| 2026-09-08 14:30 | Timed event | high | - |"])
+            self.assertEqual(box.run_generator().returncode, 0)
+            self.assertIn('timestamp("2026-09-08T14:30:00+00:00")', box.pine())
+
+    def test_validator_accepts_a_time_of_day(self):
+        with Sandbox() as box:
+            box.write(["| 2026-09-08 14:30 | Timed event | high | - |"])
+            self.assertEqual(box.validate().returncode, 0)
+
+
 class TestValidatorCatches(unittest.TestCase):
     def assert_rejected(self, row):
         with Sandbox() as box:

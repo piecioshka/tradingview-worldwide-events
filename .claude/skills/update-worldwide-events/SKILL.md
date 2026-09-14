@@ -99,6 +99,7 @@ Link z nawiasami w URL owijaj w `<...>`:
   wiersz z tą samą datą nadpisuje pierwszy. Dwa wydarzenia z jednego dnia sklej w jeden opis
   (wzorzec: `Warsh nominated as Fed Chair + CME silver margin hike`).
 - Nowe wiersze wstaw zaraz pod linią `| ---`, malejąco po dacie.
+- Data to `YYYY-MM-DD`, a gdy znasz godzinę wydarzenia - `YYYY-MM-DD HH:MM` (czas UTC).
 
 ## Krok 5: format, generator, kontrola
 

@@ -65,6 +65,30 @@ def gen_new_event_func(langs):
     )
 
 
+def to_iso_utc(date):
+    """Turns a data-file date into an explicit UTC instant for Pine.
+
+    Bare `timestamp("2026-09-08")` is resolved in the *chart's* exchange
+    timezone, so the same event lands on different bars depending on the symbol
+    (and on futures, whose session opens the previous evening, on the previous
+    calendar day). Pinning the instant to UTC makes placement deterministic.
+
+    Accepts "YYYY-MM-DD" (midnight UTC) and "YYYY-MM-DD HH:MM[:SS]" for events
+    whose time of day is known.
+    """
+    date = date.strip()
+    if " " in date:
+        day, clock = date.split(" ", 1)
+        parts = clock.split(":")
+        if len(parts) == 2:
+            clock = f"{clock}:00"
+        elif len(parts) != 3:
+            raise SystemExit(f"invalid time in date {date!r}")
+    else:
+        day, clock = date, "00:00:00"
+    return f"{day}T{clock}+00:00"
+
+
 def gen_events_block(langs, lang_data):
     primary = lang_data[langs[0]]
     lines = []
@@ -74,7 +98,8 @@ def gen_events_block(langs, lang_data):
             desc = lang_data.get(lang, {}).get(date, (desc_primary,))[0]
             descs.append(f'"{desc}"')
         color = PRIORITY_TO_COLOR.get(priority, "")
-        lines.append(f'    new_event(timestamp("{date}"), {", ".join(descs)}{color})')
+        ts = to_iso_utc(date)
+        lines.append(f'    new_event(timestamp("{ts}"), {", ".join(descs)}{color})')
     return "\n".join(lines)
 
 
