@@ -111,7 +111,8 @@ python3 scripts/check-events.py --since <data-z-kroku-1>
 Prettier wyrównuje całą tabelę, więc `git diff` dotyka każdej linii pliku - to normalne.
 `check-events.py` sprawdza zgodność dat między plikami, sortowanie, brak cudzysłowów, długość
 opisów, obecność linku w nowych wierszach i kod HTTP każdego nowego linku. Ten sam skrypt
-chodzi w CI (bez `--since`, z `--no-http`), więc błąd w danych zatrzyma workflow.
+chodzi w CI (bez `--since`, z `--no-http`) razem z `scripts/test_generate.py`, więc błąd
+w danych zatrzyma workflow.
 
 ## Krok 6: commit i podsumowanie
 

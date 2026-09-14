@@ -13,6 +13,7 @@ import glob
 import os
 import re
 import sys
+import urllib.error
 import urllib.request
 
 ROW = re.compile(r"^\| (\d{4}-\d{2}-\d{2}) +\| (.*?) +\| (high|medium|low) +\| (.*?) +\|$")
@@ -71,6 +72,12 @@ def main():
             dates.append(date)
             if '"' in desc:
                 problems.append(f"{path}:{n}: double quote in description (breaks Pine string)")
+            if "\\" in desc:
+                problems.append(f"{path}:{n}: backslash in description (breaks Pine string)")
+            if "|" in desc:
+                problems.append(f"{path}:{n}: pipe in description (generator would truncate the row)")
+            if not desc.strip():
+                problems.append(f"{path}:{n}: empty description")
             if len(desc) > MAX_DESC:
                 problems.append(f"{path}:{n}: description {len(desc)} chars (> {MAX_DESC})")
             link = link.strip()

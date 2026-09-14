@@ -6,7 +6,7 @@
 
 <!-- prettier-ignore-end -->
 
-From the Chaco War to today's headlines — overlay 90+ key historical events directly on your price chart and see how markets reacted.
+From the Chaco War to today's headlines — overlay 170+ key historical events directly on your price chart and see how markets reacted.
 
 **[View on TradingView →](https://www.tradingview.com/script/lX6YZhUm-Worldwide-Events/)**
 
@@ -50,7 +50,7 @@ To add a new language, create `data/events-XX.md` (where `XX` is the language co
 
 ## Development
 
-Events are stored in `data/events-EN.md` and `data/events-PL.md`. The Pine Script file is generated automatically — do not edit it by hand.
+Events are stored in `data/events-en.md` and `data/events-pl.md`. The Pine Script file is generated automatically — do not edit it by hand.
 
 To regenerate `worldwide-events.pine` after modifying event data:
 
@@ -76,6 +76,14 @@ python scripts/check-events.py --no-http
 ```
 
 It checks that all language files share the same dates, that rows are sorted and unique, and that descriptions are Pine-safe. Drop `--no-http` to also verify that every link returns HTTP 200 (slow — it fetches each URL).
+
+The generator and validator have their own regression tests:
+
+```bash
+python scripts/test_generate.py
+```
+
+Both run in CI on every pull request touching `data/`, `scripts/` or the Pine file.
 
 ## Contributing
 

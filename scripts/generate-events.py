@@ -33,9 +33,13 @@ def parse_events(path):
             if not line.startswith("|") or line.startswith("| Date") or line.startswith("| ---"):
                 continue
             parts = [p.strip() for p in line.strip("|").split("|")]
-            if len(parts) < 3:
-                continue
+            if len(parts) != 4:
+                raise SystemExit(
+                    f"{path}: expected 4 columns, found {len(parts)}: {line[:60]}"
+                )
             date, desc, priority = parts[0], parts[1], parts[2]
+            if date in events:
+                raise SystemExit(f"{path}: duplicate date {date}")
             events[date] = (desc, priority)
     return events
 
@@ -82,19 +86,35 @@ def gen_label_lookup(langs):
     return f"        l = {expr}"
 
 
+def _replace_once(content, pattern, replacement, what):
+    """Substitutes exactly one match, inserting `replacement` literally.
+
+    A function replacement is used on purpose: passing event text through a
+    replacement *string* would let re interpret \\1, \\g<1> and \\t coming
+    straight from data/events-*.md. Requiring exactly one match turns a missing
+    or duplicated marker into an error instead of a silent no-op.
+    """
+    content, n = re.subn(
+        pattern,
+        lambda m: m.group(1) + replacement + m.group(3),
+        content,
+        flags=re.DOTALL,
+    )
+    if n != 1:
+        raise SystemExit(f"{PINE_FILE}: expected exactly 1 match for {what}, found {n}")
+    return content
+
+
 def inject_section(content, marker, replacement):
-    # Match both top-level and indented @end-generated tags
+    # Match both top-level and indented @end-generated tags; group 3 carries the
+    # original indentation, so it does not have to be rebuilt by hand.
     pattern = rf"([ \t]*// @generated {re.escape(marker)}\n)(.*?)(\n[ \t]*// @end-generated)"
-    m = re.search(rf"([ \t]*)// @generated {re.escape(marker)}", content)
-    indent = m.group(1) if m else ""
-    end_tag = f"\n{indent}// @end-generated"
-    repl = rf"\g<1>{replacement}{end_tag}"
-    return re.sub(pattern, repl, content, flags=re.DOTALL)
+    return _replace_once(content, pattern, replacement, f"marker '{marker}'")
 
 
 def inject_events(content, events_block):
     pattern = r"(if barstate\.isfirst\n)(.*?)(\n\nif barstate\.islast)"
-    return re.sub(pattern, rf"\g<1>{events_block}\g<3>", content, flags=re.DOTALL)
+    return _replace_once(content, pattern, events_block, "the events block")
 
 
 def main():
