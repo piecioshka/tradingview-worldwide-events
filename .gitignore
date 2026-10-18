@@ -1,5 +1,5 @@
 tmp/*
-!tmp/.gitkeep
+tmp/
 .DS_Store
 __pycache__/
 *.pyc
