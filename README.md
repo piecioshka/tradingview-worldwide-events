@@ -36,8 +36,6 @@ Event descriptions are available in the following languages:
 | 🇬🇧 EN | English  |
 | 🇵🇱 PL | Polish   |
 
-To add a new language, create `data/events-XX.md` (where `XX` is the language code) using the same table format as the existing files. The indicator and GitHub Actions workflow will pick it up automatically.
-
 ## Installation
 
 1. 📈 Open [Worldwide Events on TradingView](https://www.tradingview.com/script/lX6YZhUm-Worldwide-Events/) and click **"Add to chart"**
@@ -48,46 +46,11 @@ To add a new language, create `data/events-XX.md` (where `XX` is the language co
 6. 🗓️ Hover over an event icon to see its date
 7. 📊 Analyze market reactions to key historical moments
 
-## Development
-
-Events are stored in `data/events-en.md` and `data/events-pl.md`. The Pine Script file is generated automatically — do not edit it by hand.
-
-To regenerate `worldwide-events.pine` after modifying event data:
-
-```bash
-python scripts/generate-events.py
-```
-
-To add a new language, create `data/events-XX.md` (where `XX` is the ISO language code) using the same table format as the existing files. The generator and GitHub Actions workflow will pick it up automatically.
-
-### Event data format
-
-Each row is `| Date | Description | Priority | Link |`:
-
-- **Date** — `YYYY-MM-DD`, or `YYYY-MM-DD HH:MM[:SS]` when the time of day is known. Rows are sorted descending and every language file must cover exactly the same set of dates. Times are **UTC**: the generator emits `timestamp("…T00:00:00+00:00")`, so an event lands on the same instant regardless of the chart's exchange timezone.
-- **Description** — plain text, no double quotes (they would break the generated Pine string).
-- **Priority** — `high`, `medium` or `low`; drives the marker color.
-- **Link** — a source for the event, or `-` when none is recorded. Links are documentation for contributors only — they are **not** rendered by the indicator and never reach `worldwide-events.pine`.
-
-Before committing changes to `data/`, run the validator:
-
-```bash
-python scripts/check-events.py --no-http
-```
-
-It checks that all language files share the same dates, that rows are sorted and unique, and that descriptions are Pine-safe. Drop `--no-http` to also verify that every link returns HTTP 200 (slow — it fetches each URL).
-
-The generator and validator have their own regression tests:
-
-```bash
-python scripts/test_generate.py
-```
-
-Both run in CI on every pull request touching `data/`, `scripts/` or the Pine file.
-
 ## Contributing
 
 The indicator is open source — contributions, ideas, and modifications are very welcome. Together we can build a tool that helps investors better understand the market and make more informed decisions.
+
+How to add events or a new language, regenerate the Pine Script and run the checks: [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Contact
 
